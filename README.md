@@ -14,11 +14,9 @@ ELEMENTOS:
 - Reloj de tiempo real - DS3231 RTC 
 - Display LCD 1602 
 - Sensor de calidad de aire - MQ135 
-
+- 
 - Protoboard 
 - Cables varios 
-
-
 
 FUNCIONALIDADES: 
 

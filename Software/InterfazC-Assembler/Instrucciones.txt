@@ -1,0 +1,14 @@
+# Ejemplo interfaz C con Assembler
+
+Se pasa un valor desde C hacia Assembler y retorna el valor convertido en unidades Fahrenheit.
+Uso de un main para establecer el valor e imprimir por pantalla el resultado.
+
+COMPILACIÓN Y EJECUCIÓN
+
+$   sudo as -o fahr_asm.o fahr_asm.s
+
+$   gcc -o conversion_temp conversion_temp.c fahr_asm.o
+
+$   sudo ./conversion_temp
+
+

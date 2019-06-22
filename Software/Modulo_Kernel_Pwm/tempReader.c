@@ -9,8 +9,12 @@ char* searchLn(char*,char*);
 void printTemp(char*);
 char* getTemp(void);
 void refreshPwm(void);
-unsigned int OnTemp=80;
-unsigned int OffTemp=30;
+void calcRgb(char*);
+void refreshCpuUsage(void);
+
+char dutyValues[30];
+long double a[10], b[10],CpuPercentage;
+FILE *fp;
 
 /*creacion del thread para la lectura/escritura en background de la temperatura al modulo de kernel*/
 int main()
@@ -19,15 +23,14 @@ int main()
 	pid = fork();
 	if(pid==0)
 	{
-		while(1){//Lectura de la temperatura cada 5 segundos.
+		while(1){
 		refreshPwm();
-		sleep(5);
 	}
 	}
 	else if (pid<0) perror("Could't make new thread");
 	return 0;
 }
-/*lectura y parseo de temperatura ,escritura al fs del modulo*/
+/*lectura del uso del cpu,escritura al fs del modulo*/
 void refreshPwm()
 {
 int fd;
@@ -37,44 +40,40 @@ if(fd==  -1 )
     printf("El archivo %s no existe o a sido bloqueado\n","/sys/pwm/pwm");
     exit(-1);
 }
-char* temp=getTemp();
-int miliTempC=atoi(temp);
-unsigned int duty;
-if(miliTempC>OffTemp) duty = (((miliTempC-(OffTemp*1000))*100)/((OnTemp-OffTemp)*1000));
-else duty = 0;
-float TempC = (float)miliTempC/(float)1000.00;
-char pwm [20];
-char Temp[5];
-sprintf(Temp,"%.2f\n",TempC);
-sprintf(pwm,"1 1000 %d",duty);
-write(fd,pwm,sizeof(pwm));
+refreshCpuUsage();
+calcRgb(dutyValues);
+write(fd,dutyValues,sizeof(dutyValues));
 }
-/*Funcion para obtener la temperatura de la rspi en miliC*/
-char* getTemp()//mili C°
+//Calculo de intensidades rgb segun Uso del cpu
+void calcRgb(char* rgb)
 {
-	return searchLn("first","/sys/class/thermal/thermal_zone0/temp");
+    float red=0;
+    float green=255;
+    double usage=CpuPercentage;
+    while(usage>0)
+    {
+	red+=2.55;
+	green-=2.55;
+	usage--;
+    }
+    sprintf(rgb,"1 1000 %.0f %.0f 0",red,green);
+    printf("Cpu : %.2Lf %\n",CpuPercentage);
+}
+//Lectura y calculo del uso del cpu
+void refreshCpuUsage(){
+        fp = fopen("/proc/stat","r");
+        fscanf(fp,"%*s %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf",&a[0],&a[1],&a[2],&a[3],&a[4],&a[5],&a[6],&a[7],&a[8],&a[9]);
+        fclose(fp);
+	double CpuTimeSinceBootA=a[0]+a[1]+a[2]+a[3]+a[4]+a[5]+a[6];
+	double CpuIdleTimeSinceBootA=a[3]+a[4];
+	double CpuUsageSinceBootA=CpuTimeSinceBootA-CpuIdleTimeSinceBootA;
+        sleep(1);
+        fp = fopen("/proc/stat","r");
+        fscanf(fp,"%*s %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf %Lf",&b[0],&b[1],&b[2],&b[3],&b[4],&b[5],&b[6],&b[7],&b[8],&b[9]);
+        fclose(fp);
+	double CpuTimeSinceBootB=b[0]+b[1]+b[2]+b[3]+b[4]+b[5]+b[6];
+	double CpuIdleTimeSinceBootB=b[3]+b[4];
+	double CpuUsageSinceBootB=CpuTimeSinceBootB-CpuIdleTimeSinceBootB;
+	CpuPercentage=((CpuUsageSinceBootB-CpuUsageSinceBootA)*100)/(CpuTimeSinceBootB-CpuTimeSinceBootA);
 }
 
-char* searchLn(char* search, char* fileDir)//Devuelve información contenida en el archivo dentro de fileDir que empiece con la palabra search.
-{
-		FILE * file;
-	    char* line = (char *) malloc(sizeof(char) * 64);
-
-	    file = fopen(fileDir, "r");
-
-	    if (NULL == file)
-	    {
-	         fprintf(stderr,"File %s is invalid or doesn't exist",fileDir);
-	    }
-	    if(strcmp(search,"first")!=0)//en caso que se especifique el parametro search que no sea first (primer línea)
-	    {
-	    	while(strncmp(search,line,strlen(search)) != 0)
-	    		    {
-	    		    	fscanf(file, "%64[^\n]\n", line);//leer hasta encontrar la linea que comience con search
-	    		    }
-	    }
-	    else fscanf(file, "%64[^\n]\n", line);
-
-	    fclose(file);
-	    return line;
-}

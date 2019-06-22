@@ -1,0 +1,8 @@
+Se ha incorporado lo anteriormente realizado al programa en Python del sistema que controla la obtención de los valores de ambiente y los sube a la base de datos.
+Desde "livDB.py" programa en Python se llama a "conversion_temp.c" escrito en C y desde C a "fahr_asm.s" escrito en ASM. ASM devuelve el valor de conversion de Celsius a Fahrenheit y esta variable se retorna desde ASM a C y finalmente a Python.
+
+COMPILACION Y EJECUCION
+
+$ sudo as -o fahr_asm.o fahr_asm.s
+$ gcc -shared -o libpyc.so -fPIC conversion_temp.c fahr_asm.o
+$ sudo python livDB.py

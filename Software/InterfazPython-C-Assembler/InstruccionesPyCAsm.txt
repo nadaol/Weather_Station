@@ -1,0 +1,14 @@
+# Interfaz entre Python, C y ASM
+
+Desde un programa de Python se comunica con una función de C mediante la creación de una librería en común y llamada desde Python. 
+Luego, desde C se envia el valor recibido desde Python más otro parámetro agregado por C hacia una función en Ensamblador.
+Ésta función en Ensamblador realiza la operatoria para la conversion del valor. 
+Se retorna el valor desde ASM hacia C y dicho valor desde C hacia Python finalmente.
+
+Se imprimen valores por pantalla especificando en que programa se encuentra y los valores en cada momento.
+
+COMPILACION Y EJECUCION
+
+$ sudo as -o fahr_asm.o fahr_asm.s
+$ gcc -shared -o libpyc.so -fPIC conversion_temp.c fahr_asm.o
+$ sudo python temp.py

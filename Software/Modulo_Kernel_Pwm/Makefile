@@ -6,7 +6,6 @@ all:
 	gcc -o reader tempReader.c
 	sudo insmod pwmDriverPin18.ko
 	sudo chmod 777 /sys/pwm/pwm
-	sudo ./reader
 clean:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean
 	sudo rmmod  pwmDriverPin18

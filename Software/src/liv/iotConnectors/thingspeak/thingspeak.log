@@ -1,0 +1,22 @@
+Wed, 26 Jun 2019 22:23:18 - __main__ - INFO - thingspeak.py - 17- --------------------------------------------
+Wed, 26 Jun 2019 22:23:18 - __main__ - INFO - thingspeak.py - 18- THINGSPEAK STARTED
+Wed, 26 Jun 2019 22:23:18 - __main__ - INFO - thingspeak.py - 44- Writing data to thingspeak 
+Wed, 26 Jun 2019 22:23:18 - __main__ - INFO - thingspeak.py - 50- {u'Timestamp': u'2019-06-26 22:23:12', u'CO2level': u'-999', u'Temperature': u'62.0', u'AirPressure': u'961.47', u'Humidity': u'21.0'}
+Wed, 26 Jun 2019 22:23:18 - __main__ - INFO - thingspeak.py - 52- 2019-06-27 01:23:18.611947
+Wed, 26 Jun 2019 22:23:19 - __main__ - INFO - thingspeak.py - 63- 200
+Wed, 26 Jun 2019 22:23:19 - __main__ - INFO - thingspeak.py - 64- OK
+Wed, 26 Jun 2019 22:24:18 - __main__ - INFO - thingspeak.py - 44- Writing data to thingspeak 
+Wed, 26 Jun 2019 22:24:18 - __main__ - INFO - thingspeak.py - 50- {u'Timestamp': u'2019-06-26 22:23:12', u'CO2level': u'-999', u'Temperature': u'62.0', u'AirPressure': u'961.47', u'Humidity': u'21.0'}
+Wed, 26 Jun 2019 22:24:18 - __main__ - INFO - thingspeak.py - 52- 2019-06-27 01:24:18.745696
+Wed, 26 Jun 2019 22:24:19 - __main__ - INFO - thingspeak.py - 63- 200
+Wed, 26 Jun 2019 22:24:19 - __main__ - INFO - thingspeak.py - 64- OK
+Wed, 26 Jun 2019 22:25:19 - __main__ - INFO - thingspeak.py - 44- Writing data to thingspeak 
+Wed, 26 Jun 2019 22:25:19 - __main__ - INFO - thingspeak.py - 50- {u'Timestamp': u'2019-06-26 22:25:13', u'CO2level': u'-999', u'Temperature': u'62.0', u'AirPressure': u'961.51', u'Humidity': u'20.0'}
+Wed, 26 Jun 2019 22:25:19 - __main__ - INFO - thingspeak.py - 52- 2019-06-27 01:25:19.253469
+Wed, 26 Jun 2019 22:25:19 - __main__ - INFO - thingspeak.py - 63- 200
+Wed, 26 Jun 2019 22:25:19 - __main__ - INFO - thingspeak.py - 64- OK
+Wed, 26 Jun 2019 22:26:19 - __main__ - INFO - thingspeak.py - 44- Writing data to thingspeak 
+Wed, 26 Jun 2019 22:26:19 - __main__ - INFO - thingspeak.py - 50- {u'Timestamp': u'2019-06-26 22:25:13', u'CO2level': u'-999', u'Temperature': u'62.0', u'AirPressure': u'961.51', u'Humidity': u'20.0'}
+Wed, 26 Jun 2019 22:26:19 - __main__ - INFO - thingspeak.py - 52- 2019-06-27 01:26:19.787905
+Wed, 26 Jun 2019 22:26:20 - __main__ - INFO - thingspeak.py - 63- 200
+Wed, 26 Jun 2019 22:26:20 - __main__ - INFO - thingspeak.py - 64- OK

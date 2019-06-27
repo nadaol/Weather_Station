@@ -21,3 +21,9 @@ Luego ese es parseado a valores de ciclo de trabajo y es escrito en la entrada s
 la cual hará que el módulo finalmente actualice sus valores de ciclo de trabajo para variar la intensidad de los colores del led
 rgb de acuerdo al uso del cpu en ese momento.
 Se debe ejecutar (sudo ./tempReader.c) luego de haber cargado el modulo.
+
+#Para probar el modulo instalar stress_1.0.4 mediante:
+./configure
+make
+sudo make install
+Luego probar test con  $stress --cpu 4 -t 5

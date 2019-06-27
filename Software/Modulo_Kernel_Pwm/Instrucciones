@@ -1,7 +1,23 @@
-Archivo pwmDriverPin18.c : Modulo de Kernel para el control del ciclo de trabajo (duty cycle) y frecuencia de los pines 17,27,22 .
+Archivo pwmDriverPin18.c : Modulo de Kernel multithread para el control del ciclo de trabajo (duty cycle) y frecuencia de los pines 17,27,22 .
+
 Comunicación al espacio usuario mediante la entrada al fs sys/pwm/pwm
-Lógica de comunicación : #e #f #r #g #b
+
+Lógica de comunicación : echo '#e #f #r #g #b' >> sys/pwm/pwm
 Donde #e (int:enable) : Permite la deshabilitación de la generación del pwm (0 desactivado,1 activado)
 #f (int:frecuency) : En este campo se debe especificar la frecuencia del pwm generado,tener en cuenta que es común para los tres pines.
-Dado que tiempos del pwm se establecen en ms para frecuencias bajas o us para frecuencias mayores a 10khz.Valor recomendado de 1hz a 50000hz.
+Dado que los tiempos del pwm se establecen en ms para frecuencias bajas o us para frecuencias mayores a 10khz se recomienda un valor entre 1hz a 50000hz.
+#r (int:ReddutyCycle) : En este campo se especifica el ciclo de trabajo del pin 17 . Valores permitidos (0-255) siendo 0->0% 255->100%
+#g (int:GreendutyCycle) : En este campo se especifica el ciclo de trabajo del pin 27 . Valores permitidos (0-255) siendo 0->0% 255->100%
+#b (int:BluedutyCycle) : En este campo se especifica el ciclo de trabajo del pin 22 . Valores permitidos (0-255) siendo 0->0% 255->100%
 
+Para compilar el modulo ejecutar el makefile incuido con en comando $make all y para desinstalar el modulo con el comando $make clean
+Al cargar el módulo correctamente se debe observar un pulso inicial de 5% a 1hz en el pin 22.
+
+
+Archivo tempReader.c : Archivo de lectura del uso del cpu y escritura a la entrada sys/pwm/pwm para generar en conjunto con el modulo anterior una salida a un led rgb.
+
+Este se encarga de leer la información disponible en la entrada proc/stat del fs y realiza un cálculo para obtener el porcentaje instantáneo del uso del Cpu.
+Luego ese es parseado a valores de ciclo de trabajo y es escrito en la entrada sys/pwm/pwm 
+la cual hará que el módulo finalmente actualice sus valores de ciclo de trabajo para variar la intensidad de los colores del led
+rgb de acuerdo al uso del cpu en ese momento.
+Se debe ejecutar (sudo ./tempReader.c) luego de haber cargado el modulo.

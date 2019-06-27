@@ -2,6 +2,7 @@
 @ Descripcion: multiplica por 2 y suma la constante 32 
 @	       para lograr temp Fahrenheit
 
+
 @ Info de Raspberry
         .cpu    cortex-a53
         .fpu    neon-fp-armv8

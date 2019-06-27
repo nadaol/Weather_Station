@@ -20,7 +20,7 @@ int fahrenheit(float celsius)
 
 int main (void)
 {
-	float celsius = 10;
+	float celsius = 20;
 	printf( "Celsius: %.2f°C\n", celsius );
 	int fahr = fahrenheit(celsius);
 	printf( "Fahrenheit: %d °F\n", fahr );
